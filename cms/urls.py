@@ -17,5 +17,8 @@ urlpatterns = [
 
     # 為替
     path('kawase/', views.kawase, name='kawase'),   # test
+    # path('charts/simple.png', views.simple, name="charts"),
+
+    path('bitTest/', views.bitTest, name='bitTest'),  # test
     path('charts/simple.png', views.simple, name="charts"),
 ]

@@ -1,0 +1,16 @@
+{% extends "cms/base.html" %}
+
+{% block content %}
+    <table class="table table-striped table-bordered">
+    {% for data in dataList %}
+        <tr>
+          <th scope="row">{{ data.id }}</th>
+          <td>{{ data.bidExchangeName }}</td>
+          <td>{{ data.bidPrice }}</td>
+          <td>{{ data.askExchangeName }}</td>
+          <td>{{ data.askPrice }}</td>
+          <td>{{ data.createDate }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock content %}

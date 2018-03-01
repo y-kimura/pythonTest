@@ -5,7 +5,7 @@ from django.views.generic.list import ListView
 
 from cms.models import Book, Impression
 from cms.forms import BookForm, ImpressionForm
-from batches.models import Kawase
+from batches.models import Kawase, BitTest
 
 
 def book_list(request):
@@ -97,6 +97,13 @@ def kawase(request):
                   'cms/kawase.html',     # 使用するテンプレート
                   {'kawases': kawases})         # テンプレートに渡すデータ
 
+
+def bitTest(request):
+    """bitTest"""
+    dataList = BitTest.objects.all().order_by('id')
+    return render(request,
+                  'cms/bitTest.html',     # 使用するテンプレート
+                  {'dataList': dataList})         # テンプレートに渡すデータ
 
 def simple(request):
     import django

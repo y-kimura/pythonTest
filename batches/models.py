@@ -8,3 +8,15 @@ class Kawase(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class BitTest(models.Model):
+    """BitTest"""
+    bidExchangeName = models.CharField('bidExchangeName',max_length=255)
+    bidPrice = models.FloatField('bidPrice')
+    askExchangeName = models.CharField('askExchangeName',max_length=255)
+    askPrice = models.FloatField('askPrice')
+    createDate = models.DateTimeField('作成日')
+
+    def __str__(self):
+        return self.name
