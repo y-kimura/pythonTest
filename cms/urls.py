@@ -20,5 +20,4 @@ urlpatterns = [
     # path('charts/simple.png', views.simple, name="charts"),
 
     path('bitTest/', views.bitTest, name='bitTest'),  # test
-    path('bitTest/charts/simple.png', views.simple, name="charts"),
 ]

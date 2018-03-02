@@ -104,31 +104,3 @@ def bitTest(request):
     return render(request,
                   'cms/bitTest.html',     # 使用するテンプレート
                   {'dataList': dataList})         # テンプレートに渡すデータ
-
-
-def simple(request):
-    import django
-    from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
-    import matplotlib.pyplot as plt
-    import matplotlib.dates as mdates
-
-    dataList = BitTest.objects.all().order_by('id')
-
-    fig, ax = plt.subplots()
-    x_ax = []
-    y_ax = []
-    for data in dataList:
-        x_ax.append(data.createDate)
-        y_ax.append(data.bidPrice - data.askPrice)
-    ax.plot(x_ax, y_ax)
-
-    days = mdates.AutoDateLocator()
-    daysFmt = mdates.DateFormatter("%H:%M")
-    ax.xaxis.set_major_locator(days)
-    ax.xaxis.set_major_formatter(daysFmt)
-    fig.autofmt_xdate()
-
-    canvas = FigureCanvas(fig)
-    response = django.http.HttpResponse(content_type='image/png')
-    canvas.print_png(response)
-    return response
