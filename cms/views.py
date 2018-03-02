@@ -105,27 +105,30 @@ def bitTest(request):
                   'cms/bitTest.html',     # 使用するテンプレート
                   {'dataList': dataList})         # テンプレートに渡すデータ
 
+
 def simple(request):
     import django
     from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
     import matplotlib.pyplot as plt
-    # prepare for data
-    datas = [20, 30, 10]
-    labels = ['Wine', 'Sake', 'Beer']
-    colors = ['yellow', 'red', 'green']
-    # create figure
-    fig = plt.figure(1,figsize=(4,4))
-    ax = fig.add_subplot(111)
-    ax.axis("equal")
-    # pie = ax.pie(datas, #データ
-    #              startangle=90,　#円グラフ開始軸を指定
-    #              labels=labels, #ラベル
-    #              autopct="%1.1f%%",#パーセント表示
-    #              colors=colors, #色指定
-    #              counterclock=False, #逆時計回り
-    #              )
-    # Return
-    canvas=FigureCanvas(fig)
-    response=django.http.HttpResponse(content_type='image/png')
+    import matplotlib.dates as mdates
+
+    dataList = BitTest.objects.all().order_by('id')
+
+    fig, ax = plt.subplots()
+    x_ax = []
+    y_ax = []
+    for data in dataList:
+        x_ax.append(data.createDate)
+        y_ax.append(data.bidPrice - data.askPrice)
+    ax.plot(x_ax, y_ax)
+
+    days = mdates.AutoDateLocator()
+    daysFmt = mdates.DateFormatter("%H:%M")
+    ax.xaxis.set_major_locator(days)
+    ax.xaxis.set_major_formatter(daysFmt)
+    fig.autofmt_xdate()
+
+    canvas = FigureCanvas(fig)
+    response = django.http.HttpResponse(content_type='image/png')
     canvas.print_png(response)
     return response
